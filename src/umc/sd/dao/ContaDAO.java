@@ -12,7 +12,7 @@ public class ContaDAO {
 	public ContaPresenter recuperarPorId(int id, int senha) {
 
 		Connection conexao = null;
-		ContaPresenter conta = new ContaPresenter();
+		ContaPresenter conta = null;
 
 		try {
 
@@ -27,19 +27,18 @@ public class ContaDAO {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
+				conta = new ContaPresenter();
 				conta.setNome(rs.getString("nome"));
 				conta.setSaldo(rs.getDouble("saldo"));
 			}
 
 		} catch (Exception erro) {
 			System.out.println("Falha ao recuperar conta: " + erro.getMessage());
-			conta = null;
 		} finally {
 			try {
 				conexao.close();
 			} catch (Exception erro) {
 				erro.printStackTrace();
-				conta = null;
 			}
 		}
 

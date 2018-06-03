@@ -85,18 +85,23 @@ public class ContaDAO {
 
 		try {
 
-			conexao = ConectaBD.getConexao();
+			double saldo = this.recuperarSaldo(id, senha);
 
-			String sql = "DELETE FROM conta WHERE idconta = ? AND senha = ?";
+			if (saldo == 0) {
 
-			PreparedStatement ps = conexao.prepareStatement(sql);
-			ps.setInt(1, id);
-			ps.setInt(2, senha);
+				conexao = ConectaBD.getConexao();
 
-			int r = ps.executeUpdate();
+				String sql = "DELETE FROM conta WHERE idconta = ? AND senha = ?";
 
-			if (r != 0) {
-				resultado = true;
+				PreparedStatement ps = conexao.prepareStatement(sql);
+				ps.setInt(1, id);
+				ps.setInt(2, senha);
+
+				int r = ps.executeUpdate();
+
+				if (r != 0) {
+					resultado = true;
+				}
 			}
 
 		} catch (Exception erro) {
@@ -222,33 +227,33 @@ public class ContaDAO {
 	}
 
 	public boolean sacar(int id, int senha, double valor) {
-		
+
 		Connection conexao = null;
 		boolean resultado = false;
-		
+
 		double saldoAtual = this.recuperarSaldo(id, senha);
-		
-		if (valor <= saldoAtual && saldoAtual > 0) {	
-		
+
+		if (valor <= saldoAtual && saldoAtual > 0) {
+
 			try {
-			
-				conexao = ConectaBD.getConexao();			
-				
+
+				conexao = ConectaBD.getConexao();
+
 				double novoSaldo = saldoAtual - valor;
-				
+
 				String sql = "UPDATE conta SET saldo = ? WHERE idconta = ? AND senha = ?";
-				
+
 				PreparedStatement ps = conexao.prepareStatement(sql);
 				ps.setDouble(1, novoSaldo);
 				ps.setInt(2, id);
 				ps.setInt(3, senha);
-				
+
 				int r = ps.executeUpdate();
-				
+
 				if (r != 0) {
 					resultado = true;
 				}
-				
+
 			} catch (Exception erro) {
 				System.out.println("Falha ao recuperar saldo: " + erro.getMessage());
 			} finally {
@@ -259,7 +264,7 @@ public class ContaDAO {
 				}
 			}
 		}
-		
+
 		return resultado;
 	}
 }

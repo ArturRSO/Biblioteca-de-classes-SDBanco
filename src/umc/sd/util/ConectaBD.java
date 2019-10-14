@@ -11,9 +11,9 @@ public class ConectaBD {
 		
 		try {
 			
-			String url = "jdbc:postgresql://localhost:5432/dbbanco";
-			String usuario = "postgres";
-			String senha = "postgres";
+			String url = "jdbc:postgresql://localhost:5432/db_test";
+			String usuario = "test";
+			String senha = "Test_666";
 			
 			Class.forName("org.postgresql.Driver");
 			

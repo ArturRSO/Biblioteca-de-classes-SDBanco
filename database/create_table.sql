@@ -4,10 +4,11 @@
 
 CREATE TABLE public.conta
 (
-    idconta integer NOT NULL,
+    senha integer NOT NULL,
     nome character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL,
     saldo double precision,
-    CONSTRAINT conta_pkey PRIMARY KEY (idconta)
+    CONSTRAINT conta_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
